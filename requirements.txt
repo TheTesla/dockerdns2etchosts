@@ -1,0 +1,2 @@
+python_hosts==1.0.1
+docker_py==1.10.6
