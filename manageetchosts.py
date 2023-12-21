@@ -43,19 +43,22 @@ def printEntries(title, ip2namesDict):
 if __name__ == '__main__':
     print('Starting up docker -> /etc/hosts management')
     while True:
-        dockerHosts = getDockerIp2names()
-        target = addFlag(dockerHosts)
-        current = getHostsIp2names()
-        #print(dockerHosts)
-        sub = hostDiff(current, target)
-        add = hostDiff(target, current)
-        printEntries('Removing entries:', sub)
-        delHostEntries(sub.keys())
-        printEntries('Adding entries:', add)
-        #addHostEntries(add) # this must be coded this way, because adding entries with same flag/name like existing entries not working:
-        if len(add) > 0:
-            delHostEntries(current.keys())
-            addHostEntries(target)
+        try:
+            dockerHosts = getDockerIp2names()
+            target = addFlag(dockerHosts)
+            current = getHostsIp2names()
+            #print(dockerHosts)
+            sub = hostDiff(current, target)
+            add = hostDiff(target, current)
+            printEntries('Removing entries:', sub)
+            delHostEntries(sub.keys())
+            printEntries('Adding entries:', add)
+            #addHostEntries(add) # this must be coded this way, because adding entries with same flag/name like existing entries not working:
+            if len(add) > 0:
+                delHostEntries(current.keys())
+                addHostEntries(target)
+        except Exception as e:
+            print(e)
         time.sleep(1)
 
 
